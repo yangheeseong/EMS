@@ -1,8 +1,10 @@
 # EMS
-오류 로그 수집 시스템
-
-### <장고 프로젝트 기본 설정 및 실행 테스트>
-
+###오류 로그 수집 시스템 - Toy Projects #1<br>
+Sentry같은 오류 로그 수집 시스템이 지원되지 않는 곳에 사용하기 위해서 개발<br>
+### 개발 스펙
+Python, Django, Sqlite3, PostgreSQL, Btoostrap, AWS, Gunicorn, Nginx, Docker, Sentry
+***
+### <장고 프로젝트 기본 설정 및 실행 테스트 - 22.06.22>
 >1.가상환경 설정 
 > >File -> Project Structure -> SDKs -> Add New SDK -> Add Python SDK -> Virtualenv Environment 설정
 
@@ -26,5 +28,34 @@
 
 >8.장고 프로젝트 실행 (실행 테스트)
 > >python manage.py runserver
+***
+### <ems App 생성 및 작동 테스트 - 22.06.22>
+> python manage.py startapp ems
+- config/urls.py 설정
+<pre><code>
+from django.contrib import admin
+from django.urls import path, include
 
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('ems/', include('ems.urls')),
+]
+</code></pre>
+- ems/urls.py 생성 및 설정
+<pre><code>
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index),
+]
+</code></pre>
+
+- ems/views.py 테스트 코드 생성 및 작동 확인
+<pre><code>
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse("Hello World!")
+</code></pre>
 ***
