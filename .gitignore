@@ -110,6 +110,8 @@ ENV/
 env.bak/
 venv.bak/
 .idea/
+secrets.json
+sentry.json
 
 # Spyder project settings
 .spyderproject

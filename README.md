@@ -1,6 +1,6 @@
 # EMS
-###오류 로그 수집 시스템 - Toy Projects #1<br>
-Sentry같은 오류 로그 수집 시스템이 지원되지 않는 곳에 사용하기 위해서 개발<br>
+### 오류 로그 수집 시스템 - Toy Projects #1<br>
+오류 로그 수집 시스템이 지원되지 않는 곳에 사용하기 위해서 개발<br>
 ### 개발 스펙
 Python, Django, Sqlite3, PostgreSQL, Btoostrap, AWS, Gunicorn, Nginx, Docker, Sentry
 ***
@@ -29,7 +29,7 @@ Python, Django, Sqlite3, PostgreSQL, Btoostrap, AWS, Gunicorn, Nginx, Docker, Se
 >8.장고 프로젝트 실행 (실행 테스트)
 > >python manage.py runserver
 ***
-### <ems App 생성 및 작동 테스트 - 22.06.22>
+### <ems App 생성 및 실행 테스트 - 22.06.22>
 > python manage.py startapp ems
 - config/urls.py 설정
 <pre><code>
@@ -58,4 +58,16 @@ from django.http import HttpResponse
 def index(request):
     return HttpResponse("Hello World!")
 </code></pre>
+***
+### <DB Table 생성, Admin 추가, 그리고 테스트 - 22.06.24>
+- models.py 코드 작성 후 아래 명령어 실행
+<pre><code>
+python manage.py makemigrations
+python manage.py migrate
+</code></pre>
+- Admin 관리자 생성
+<pre><code>
+python manage.py createsuperuser
+</code></pre>
+- Admin Table 관리기능과 검색 기능 추가
 ***
