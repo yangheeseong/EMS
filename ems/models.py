@@ -21,3 +21,9 @@ class SiteErrorLog(models.Model):
 
     def __str__(self):
         return self.errorCategory
+
+
+class Comment(models.Model):
+    siteErrorLog = models.ForeignKey(SiteErrorLog, on_delete=models.CASCADE)
+    comment = models.CharField(max_length=3000)
+    createDate = models.DateTimeField(auto_now_add=True)

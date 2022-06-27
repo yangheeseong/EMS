@@ -71,3 +71,10 @@ python manage.py createsuperuser
 </code></pre>
 - Admin Table 관리기능과 검색 기능 추가
 ***
+### <목록, 상세페이지 기능 추가. Bootstrap 적용 - 22.06.27>
+- models.py Comment Class 추가
+- 상세 페이지. 댓글 기능 추가
+- Bootstrap 적용
+- 목록 페이지. 페이징 추가
+- 목록 페이지. 검색 추가
+- 목록 페이지. 답변 갯수 표기

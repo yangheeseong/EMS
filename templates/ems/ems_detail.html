@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Post content-->
+            <article>
+                <!-- Post header-->
+                <header class="mb-4">
+                    <h1 class="fw-bolder mb-1">{{ log.errorCategory }}</h1>
+                </header>
+                <section class="mb-5">
+                    {{ log.errorDescription }}
+                </section>
+            </article>
+            <!-- Comments section-->
+            <section class="mb-5">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <!-- Comment form-->
+                        <form class="mb-4" action="{% url 'ems:commentCreate' log.id %}" method="post">
+                            {% csrf_token %}
+                            {% if form.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {% for field in form %}
+                                    {% if field.errors %}
+                                    <div>
+                                        <h6 class="font-weight-bold">{{ field.label }}</h6>
+                                        {{ field.errors }}
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <textarea class="form-control" rows="3" name="comment" id="comment" placeholder="comment"></textarea>
+                            <input type="submit" value="댓글등록" class="btn btn-primary float-right btn-sm" style="margin-top:10px;">
+                        </form>
+                        {% for comment in log.comment_set.all %}
+                        <div class="d-flex mb-4">
+                            <div class="ms-3">
+                                <div class="font-weight-bold">Commenter Name</div>
+                                {{ comment.comment }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}
