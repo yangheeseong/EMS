@@ -59,7 +59,7 @@ def index(request):
     return HttpResponse("Hello World!")
 </code></pre>
 ***
-### <DB Table 생성, Admin 추가, 그리고 테스트 - 22.06.24>
+### <DB Table 생성, Admin 추가 - 22.06.24>
 - models.py 코드 작성 후 아래 명령어 실행
 <pre><code>
 python manage.py makemigrations
@@ -78,3 +78,15 @@ python manage.py createsuperuser
 - 목록 페이지. 페이징 추가
 - 목록 페이지. 검색 추가
 - 목록 페이지. 답변 갯수 표기
+***
+### <로그인, 로그아웃 추가 - 22.06.28>
+- django.contrib.auth 사용
+***
+### <회원가입 및 편의 기능 추가 - 22.06.28>
+- django.contrib.auth.forms 사용
+- django.contrib.auth.models 사용
+- 댓글 작성자 등록 추가 (모델 변경)
+- 댓글 삭제 기능 추가
+- markdown 추가
+- SimpleMDE 적용
+***

@@ -2941,6 +2941,13 @@ fieldset:disabled a.btn {
   border-radius: 0.2rem;
 }
 
+.btn-xs, .btn-group-xs > .btn {
+  padding: 0.05rem 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+}
+
 .btn-block {
   display: block;
   width: 100%;
@@ -9993,6 +10000,10 @@ a:focus {
 
 .text-lg {
   font-size: 1.2rem;
+}
+
+.text-red-900 {
+  color: #ff0000 !important;
 }
 
 .text-gray-100 {

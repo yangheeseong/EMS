@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class SiteErrorLog(models.Model):
@@ -24,6 +25,7 @@ class SiteErrorLog(models.Model):
 
 
 class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     siteErrorLog = models.ForeignKey(SiteErrorLog, on_delete=models.CASCADE)
     comment = models.CharField(max_length=3000)
     createDate = models.DateTimeField(auto_now_add=True)

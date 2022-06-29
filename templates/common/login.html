@@ -6,11 +6,12 @@
     </div>
     <form class="user" method="post" action="{% url 'common:login' %}">
         {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
         {% include "form_errors.html" %}
         <div class="form-group">
             <input type="text" class="form-control form-control-user"
                    id="username" name="username" aria-describedby="emailHelp"
-                   placeholder="사용자 ID" value="{{ form.username.value|default_if_none:'' }}">
+                   placeholder="아이디" value="{{ form.username.value|default_if_none:'' }}">
         </div>
         <div class="form-group">
             <input type="password" class="form-control form-control-user"
@@ -19,25 +20,23 @@
         <div class="form-group">
             <div class="custom-control custom-checkbox small">
                 <input type="checkbox" class="custom-control-input" id="customCheck">
-                <label class="custom-control-label" for="customCheck">Remember
-                    Me</label>
+                <label class="custom-control-label" for="customCheck">로그인 상태 유지</label>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
+        <button type="submit" class="btn btn-primary btn-user btn-block">로그인</button>
         <hr>
         <a href="#" class="btn btn-google btn-user btn-block">
-            <i class="fab fa-google fa-fw"></i> Login with Google
+            <i class="fab fa-google fa-fw"></i> 구글 로그인
         </a>
         <a href="#" class="btn btn-facebook btn-user btn-block">
-            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+            <i class="fab fa-facebook-f fa-fw"></i> 페이스북 로그인
         </a>
     </form>
     <hr>
     <div class="text-center">
-        <a class="small" href="#">Forgot Password?</a>
-    </div>
-    <div class="text-center">
-        <a class="small" href="#">Create an Account!</a>
+        <a class="small" href="#">아이디 찾기</a>&nbsp;|&nbsp;
+        <a class="small" href="#">비밀번호 찾기</a>&nbsp;|&nbsp;
+        <a class="small" href="{% url 'common:signup' %}">회원가입</a>
     </div>
 </div>
 {% endblock %}

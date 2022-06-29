@@ -1,10 +1,12 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponseNotAllowed
-from ..forms import CommentForm
-from ..models import SiteErrorLog, Comment
+import logging
+
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.shortcuts import render, get_object_or_404
 
+from ..models import SiteErrorLog
+
+logger = logging.getLogger('ems')
 
 def index(request):
     page = request.GET.get('page', '1')
@@ -30,37 +32,9 @@ def index(request):
 
 def detail(request, log_id):
     siteErrorLog = get_object_or_404(SiteErrorLog, pk=log_id)
-    context = {'log': siteErrorLog}
+    commentList = siteErrorLog.comment_set.all
 
-    return render(
-        request,
-        'ems/ems_detail.html',
-        context
-    )
-
-
-def commentCreate(request, log_id):
-    siteErrorLog = get_object_or_404(SiteErrorLog, pk=log_id)
-
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.siteErrorLog = siteErrorLog
-            comment.save()
-
-            return redirect(
-                'ems:detail',
-                log_id=log_id
-            )
-            # return redirect('{}#answer_{}'.format(
-            #     resolve_url('pybo:detail', question_id=question.id), answer.id)
-            # )
-    else:
-        return HttpResponseNotAllowed('Only POST is possible.')
-
-    context = {'log': siteErrorLog, 'form': form}
+    context = {'log': siteErrorLog, 'commentList': commentList}
 
     return render(
         request,
