@@ -82,11 +82,16 @@ python manage.py createsuperuser
 ### <로그인, 로그아웃 추가 - 22.06.28>
 - django.contrib.auth 사용
 ***
-### <회원가입 및 편의 기능 추가 - 22.06.28>
+### <회원가입 및 편의 기능 추가 - 22.06.29>
 - django.contrib.auth.forms 사용
 - django.contrib.auth.models 사용
 - 댓글 작성자 등록 추가 (모델 변경)
 - 댓글 삭제 기능 추가
 - markdown 추가
 - SimpleMDE 적용
+***
+### <Docker, Gunicorn, Nginx, Postgres 설정 (AWS 배포)- 22.06.30>
+- docker-compose. 개발, 배포용 생성
+- nginx 관련 파일 생성
+- .env. 개발, 배포용 생성
 ***
