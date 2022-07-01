@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ems/', include('ems.urls')),
     path('common/', include('common.urls')),
+    path('schedule/', include('schedule.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -85,6 +85,7 @@ else:
 # Application definition
 
 INSTALLED_APPS = [
+    'schedule.apps.ScheduleConfig',
     'common.apps.CommonConfig',
     'ems.apps.EmsConfig',
     'django.contrib.admin',
@@ -131,6 +132,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': os.environ.get("SQL_ENGINE", 'django.db.backends.sqlite3'),
         'NAME': os.environ.get('SQL_DATABASE', os.path.join(BASE_DIR, 'db.sqlite3')),
         'USER': os.environ.get('SQL_USER', 'user'),

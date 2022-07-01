@@ -95,3 +95,6 @@ python manage.py createsuperuser
 - nginx 관련 파일 생성
 - .env. 개발, 배포용 생성
 ***
+### <일정 관리 기능 추가 - 22.07.01>
+- 간트차트 기능 추가
+- 기존 Btoostrap CSS와 충돌 이슈로 새창으로 진행

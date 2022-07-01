@@ -1,0 +1,207 @@
+<!doctype html>
+{% load static %}
+{% load ems_filter %}
+<html lang="ko">
+<head>
+    <title>업무일정</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" >
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'css/Schedule_Style.css' %}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <style rel="stylesheet">
+        body {
+            font-size: 13px;
+            padding: 0 0 50px 0;
+        }
+        .CodeMirror, .CodeMirror-scroll {
+            min-height: 80px;
+        }
+    </style>
+</head>
+<body>
+<div class="contain">
+    <div class="gantt"></div>
+</div>
+<div id="wrapper">
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <section class="mb-5">
+                            <!-- message 표시 -->
+                            {% if messages %}
+                            <div class="alert alert-danger my-3" role="alert">
+                                {% for message in messages %}
+                                <strong>{{ message.tags }}</strong>
+                                <ul><li>{{ message.message }}</li></ul>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <div class="card bg-light">
+                                <div class="card-body" style="width:800px;">
+                                    <!-- Comment form-->
+                                    <form class="mb-4" action="{% url 'schedule:commentCreate' schedule.id %}" method="post">
+                                        {% csrf_token %}
+                                        {% include "form_errors.html" %}
+                                        <textarea {% if not user.is_authenticated %}disabled{% endif %}
+                                                  class="form-control" rows="3" name="comment" id="comment" placeholder="comment"></textarea>
+                                        <input type="submit" value="댓글등록" class="btn btn-primary float-right btn-sm" style="margin-top:10px;">
+                                    </form>
+                                    {% for comment in schedule_comment %}
+                                    <a id="comment_{{ comment.id }}"></a>
+                                    <div class="d-flex mb-4">
+                                        <div class="ms-3 text-gray-700">
+                                            <div class="font-weight-bold">
+                                                {{ comment.author }}
+                                                | {{ comment.createDate }}
+                                                {% if request.user == comment.author %}
+                                                |   <a class="btn btn-danger btn-xs" href="{% url 'schedule:commentDelete' comment.id %}">삭제</a>
+                                                {% endif %}
+                                            </div>
+                                            {{ comment.comment|mark }}
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script src="{% static 'js/jquery.fn.gantt.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<script type="text/javascript">
+    new SimpleMDE({
+        autofocus: true,
+        element: document.getElementById("comment"),
+        spellChecker: false,
+        autosave: {
+            enabled: false,
+            unique_id: "comment",
+        },
+    });
+</script>
+<script>
+    $(function() {
+        $(".gantt").gantt({
+            source: [{
+                name: "퍼블리싱",
+                desc: "전체 - 5Day",
+                values: [{
+                    from: "/Date(1656850000000)/",
+                    to: "/Date(1657200000000)/",
+                    customClass: "ganttOrange"
+                }]
+            },{
+                name: "PW - 홈",
+                desc: "홈페이지 - 1Day",
+                values: [{
+                    from: "/Date(1657450000000)/",
+                    to: "/Date(1657450000000)/",
+                    customClass: "ganttOrange"
+                }]
+            },{
+                name: "PW - LIVE",
+                desc: "목록 - 1Day",
+                values: [{
+                    from: "/Date(1657500000000)/",
+                    to: "/Date(1657500000000)/",
+                    customClass: "ganttOrange"
+                }]
+            },{
+                name: "",
+                desc: "시청 - 3Day",
+                values: [{
+                    from: "/Date(1657600000000)/",
+                    to: "/Date(1657800000000)/",
+                    customClass: "ganttOrange"
+                }]
+            },{
+                name: "PW - 결제",
+                desc: "코인, 아이템 - 3Day",
+                values: [{
+                    from: "/Date(1658100000000)/",
+                    to: "/Date(1658200000000)/",
+                    customClass: "ganttOrange"
+                }]
+            },{
+                name: "PW - 마이페이지",
+                desc: "이용내역, 보유현황 - 1Day",
+                values: [{
+                    from: "/Date(1658300000000)/",
+                    to: "/Date(1658300000000)/",
+                    customClass: "ganttOrange"
+                }]
+            },{
+                name: "PW - 커뮤니티",
+                desc: "커뮤니티 외 기타 - 1Day",
+                values: [{
+                    from: "/Date(1658400000000)/",
+                    to: "/Date(1658400000000)/",
+                    customClass: "ganttOrange"
+                }]
+            },{
+                name: "MW - 홈",
+                desc: "홈페이지 - 1Day",
+                values: [{
+                    from: "/Date(1658700000000)/",
+                    to: "/Date(1658700000000)/",
+                    customClass: "ganttOrange"
+                }]
+            },{
+                name: "MW - LIVE",
+                desc: "목록 - 1Day",
+                values: [{
+                    from: "/Date(1658750000000)/",
+                    to: "/Date(1658750000000)/",
+                    customClass: "ganttOrange"
+                }]
+            },{
+                name: "",
+                desc: "시청 - 3Day",
+                values: [{
+                    from: "/Date(1658800000000)/",
+                    to: "/Date(1659000000000)/",
+                    customClass: "ganttOrange"
+                }]
+            },{
+                name: "MW - 결제",
+                desc: "코인, 아이템 - 3Day",
+                values: [{
+                    from: "/Date(1659300000000)/",
+                    to: "/Date(1659400000000)/",
+                    customClass: "ganttOrange"
+                }]
+            },{
+                name: "MW - 마이페이지",
+                desc: "이용내역, 보유현황 - 1Day",
+                values: [{
+                    from: "/Date(1659500000000)/",
+                    to: "/Date(1659500000000)/",
+                    customClass: "ganttOrange"
+                }]
+            },{
+                name: "MW - 커뮤니티",
+                desc: "커뮤니티 외 기타 - 1Day",
+                values: [{
+                    from: "/Date(1659600000000)/",
+                    to: "/Date(1659600000000)/",
+                    customClass: "ganttOrange"
+                }]
+            }],
+            navigate: "scroll",
+            scale: "days",
+            maxScale: "months",
+            minScale: "days",
+            itemsPerPage: 50
+        });
+    });
+</script>
+</html>
