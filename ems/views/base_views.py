@@ -1,8 +1,10 @@
 import logging
 
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 
 from ..models import SiteErrorLog
 
@@ -33,11 +35,45 @@ def index(request):
 def detail(request, log_id):
     siteErrorLog = get_object_or_404(SiteErrorLog, pk=log_id)
     commentList = siteErrorLog.comment_set.all
+    errorStatus = siteErrorLog.errorStatus
 
-    context = {'log': siteErrorLog, 'commentList': commentList}
+    btnResolveCss = 'btn btn-sm btn-outline-primary'
+    btnIgnoreCss = 'btn btn-sm btn-outline-danger'
+
+    if errorStatus == 'Resolve':
+        btnResolveCss = 'btn btn-sm btn-primary'
+        btnIgnoreCss = 'btn btn-sm btn-outline-danger'
+
+    if errorStatus == 'Ignore':
+        btnResolveCss = 'btn btn-sm btn-outline-primary'
+        btnIgnoreCss = 'btn btn-sm btn-danger'
+
+    context = {'log': siteErrorLog, 'commentList': commentList, 'btnResolveCss': btnResolveCss, 'btnIgnoreCss': btnIgnoreCss}
 
     return render(
         request,
         'ems/ems_detail.html',
         context
+    )
+
+
+@login_required(login_url='common:login')
+def statusUpdate(request, log_id, status):
+    siteErrorLog = get_object_or_404(SiteErrorLog, pk=log_id)
+    errorStatus = siteErrorLog.errorStatus
+
+    if not request.user.is_superuser:
+        messages.error(request, '수정권한이 없습니다.')
+    else:
+        if errorStatus == status:
+            updateStatus = None
+        else:
+            updateStatus = status
+
+        siteErrorLog.errorStatus = updateStatus
+        siteErrorLog.save()
+
+    return redirect(
+        'ems:detail',
+        log_id=log_id
     )

@@ -23,6 +23,14 @@
                 <!-- Post header-->
                 <header class="mb-4">
                     <h1 class="fw-bolder mb-1">{{ log.errorCategory }}</h1>
+                    {% if user.is_superuser %}
+                    <div class="card bg-light" style="border:0px;">
+                        <div>
+                            <a href="{% url 'ems:statusUpdate' log.id 'Resolve' %}" class="{{ btnResolveCss }}">해결</a>
+                            <a href="javascript:void(0)" id="ignore" class="{{ btnIgnoreCss }}" data-uri="{% url 'ems:statusUpdate' log.id 'Ignore' %}">무시</a>
+                        </div>
+                    </div>
+                    {% endif %}
                 </header>
                 <section class="mb-5">
                     {{ log.errorDescription }}
@@ -72,6 +80,16 @@
             enabled: false,
             unique_id: "comment",
         },
+    });
+
+    $('.btn-outline-danger').bind('click', function() {
+        if (confirm('무시 처리하시겠습니까?')) {
+            location.href = this.dataset.uri;
+        }
+    });
+
+    $('.btn-danger').bind('click', function() {
+        location.href = this.dataset.uri;
     });
 </script>
 {% endblock %}

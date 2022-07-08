@@ -29,14 +29,6 @@ def commentCreate(request, log_id):
     else:
         return HttpResponseNotAllowed('Only POST is possible.')
 
-    context = {'log': siteErrorLog, 'form': form}
-
-    return render(
-        request,
-        'ems/ems_detail.html',
-        context
-    )
-
 
 @login_required(login_url='common:login')
 def commentDelete(request, comment_id):

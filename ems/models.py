@@ -19,6 +19,7 @@ class SiteErrorLog(models.Model):
     errorCol = models.IntegerField()
     errorLine = models.IntegerField()
     createDate = models.DateTimeField(auto_now_add=True)
+    errorStatus = models.CharField(max_length=10, null=True)
 
     def __str__(self):
         return self.errorCategory
