@@ -98,3 +98,15 @@ python manage.py createsuperuser
 ### <일정 관리 기능 추가 - 22.07.01>
 - 간트차트 기능 추가
 - 기존 Btoostrap CSS와 충돌 이슈로 새창으로 진행
+***
+### <ErrorLog 해결,무시 상태값 업데이트 기능 추가 - 22.07.08>
+- 상세페이지 상태값 업데이트 기능 추가
+***
+### <업무 관리 기능 추가 - 22.07.12>
+- app 생성
+- config/settings INSTALLED_APPS 추가
+- config/urls urlpatterns 추가
+- models, urls, views 추가
+***
+### <업무 관리 기능 추가 - 22.07.13>
+- 리스트, 상세페이지 생성

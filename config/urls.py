@@ -26,6 +26,7 @@ urlpatterns = [
     path('ems/', include('ems.urls')),
     path('common/', include('common.urls')),
     path('schedule/', include('schedule.urls')),
+    path('task/', include('task.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

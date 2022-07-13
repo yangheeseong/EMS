@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load ems_filter %}
+{% load task_filter %}
 {% block content %}
 <style rel="stylesheet">
     .CodeMirror, .CodeMirror-scroll {
@@ -22,18 +22,10 @@
             <article>
                 <!-- Post header-->
                 <header class="mb-4">
-                    <h1 class="fw-bolder mb-1">{{ log.errorCategory }}</h1>
-                    {% if user.is_superuser %}
-                    <div class="card bg-light" style="border:0px;">
-                        <div>
-                            <a href="{% url 'ems:statusUpdate' log.id 'Resolve' %}" class="{{ btnResolveCss }}">해결</a>
-                            <a href="javascript:void(0)" id="ignore" class="{{ btnIgnoreCss }}" data-uri="{% url 'ems:statusUpdate' log.id 'Ignore' %}">무시</a>
-                        </div>
-                    </div>
-                    {% endif %}
+                    <h1 class="fw-bolder mb-1">{{ task.taskName }}</h1>
                 </header>
                 <section class="mb-5">
-                    {{ log.errorDescription }}
+                    {{ task.taskContent }}
                 </section>
             </article>
             <!-- Comments section-->
@@ -41,11 +33,11 @@
                 <div class="card bg-light">
                     <div class="card-body">
                         <!-- Comment form-->
-                        <form class="mb-4" action="{% url 'ems:commentCreate' log.id %}" method="post">
+                        <form class="mb-4" action="{% url 'task:commentCreate' task.id %}" method="post">
                             {% csrf_token %}
                             {% include "form_errors.html" %}
                             <textarea {% if not user.is_authenticated %}disabled{% endif %}
-                                class="form-control" rows="3" name="comment" id="comment" placeholder="comment"></textarea>
+                                      class="form-control" rows="3" name="comment" id="comment" placeholder="comment"></textarea>
                             <input type="submit" value="댓글등록" class="btn btn-primary float-right btn-sm" style="margin-top:10px;">
                         </form>
                         {% for comment in commentList %}
@@ -56,7 +48,7 @@
                                     {{ comment.author }}
                                     | {{ comment.createDate|date:'Y-m-d' }}
                                     {% if request.user == comment.author %}
-                                    |   <a class="btn btn-danger btn-xs" href="{% url 'ems:commentDelete' comment.id %}">삭제</a>
+                                    |   <a class="btn btn-danger btn-xs" href="{% url 'task:commentDelete' comment.id %}">삭제</a>
                                     {% endif %}
                                 </div>
                                 {{ comment.comment|mark }}
@@ -80,16 +72,6 @@
             enabled: false,
             unique_id: "comment",
         },
-    });
-
-    $('.btn-outline-danger').bind('click', function() {
-        if (confirm('무시 처리하시겠습니까?')) {
-            location.href = this.dataset.uri;
-        }
-    });
-
-    $('.btn-danger').bind('click', function() {
-        location.href = this.dataset.uri;
     });
 </script>
 {% endblock %}

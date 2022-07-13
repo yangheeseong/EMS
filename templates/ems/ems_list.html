@@ -49,12 +49,12 @@
                                 <span class="badge badge-secondary badge-counter">{{ log.comment_set.count }}</span>
                                 {% endif %}
                             </td>
-                            <td>{{ log.createDate }}</td>
+                            <td>{{ log.createDate|date:'Y-m-d' }}</td>
                         </tr>
                         {% endfor %}
                     {% else %}
                         <tr>
-                            <td colspan="6">No Data</td>
+                            <td colspan="6" style="text-align:center;">No Data</td>
                         </tr>
                     {% endif %}
                     </tbody>

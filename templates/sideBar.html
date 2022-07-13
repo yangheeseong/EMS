@@ -12,7 +12,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - EMS -->
-    <li class="nav-item active">
+    <li class="nav-item {% if 'ems' in request.path %}active{% endif %}">
         <a class="nav-link" href="{% url 'ems:index' %}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>EMS</span>
@@ -27,7 +27,7 @@
         개인 업무
     </div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
+    <!-- Nav Item - 일정 관리 -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
            aria-expanded="true" aria-controls="collapseTwo">
@@ -39,6 +39,31 @@
                 <a class="collapse-item" href="{% url 'schedule:schedule' %}" target="_blank">7월 업무</a>
             </div>
         </div>
+    </li>
+
+    <!-- Nav Item - 업무 관리 -->
+    <li class="nav-item {% if 'task' in request.path %}active{% endif %}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTask"
+           aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-table"></i>
+            <span>업무 관리</span>
+        </a>
+        <div id="collapseTask" class="collapse {% if 'task' in request.path %}show{% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item {% if 'state=N' in request.get_full_path %}active{% endif %}" href="/task/?state=N">준비 업무</a>
+                <a class="collapse-item {% if 'state=P' in request.get_full_path %}active{% endif %}" href="/task/?state=P">진행 업무</a>
+                <a class="collapse-item {% if 'state=Y' in request.get_full_path %}active{% endif %}" href="/task/?state=Y">완료 업무</a>
+                <a class="collapse-item {% if 'state=E' in request.get_full_path %}active{% endif %}" href="/task/?state=E">보류 업무</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - 메모장 -->
+    <li class="nav-item {% if 'memo' in request.path %}active{% endif %}">
+        <a class="nav-link" href="#">
+            <i class="fas fa-fw fa-table"></i>
+            <span>메모장</span>
+        </a>
     </li>
 
     <!-- Sidebar Toggler (Sidebar) -->
