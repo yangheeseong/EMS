@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">업무 관리</h6>
+            <h6 class="m-0 font-weight-bold text-primary">업무 목록</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -62,7 +62,7 @@
                             {% endif %}
                         </td>
                         <td>{{ task.request }}</td>
-                        <td>{{ task.manager1 }}/{{ task.manager2 }}</td>
+                        <td>{{ task.manager }}</td>
                         <td>{{ task.createDate|date:'Y-m-d' }}</td>
                         <td>{{ task.completeState|completeStateText }}</td>
                     </tr>

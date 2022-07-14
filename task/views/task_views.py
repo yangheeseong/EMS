@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 
+from ..forms import TaskForm
 from ..models import Task
 
 logger = logging.getLogger('task')
@@ -48,4 +49,71 @@ def detail(request, task_id):
         request,
         'task/task_detail.html',
         context
+    )
+
+
+@login_required(login_url='common:login')
+def create(request):
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.author = request.user
+            task.save()
+
+            return redirect('task:task')
+    else:
+        form = TaskForm()
+
+    context = {'form': form}
+
+    return render(
+        request,
+        'task/task_form.html',
+        context
+    )
+
+
+@login_required(login_url='common:login')
+def modify(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+
+    if request.user != task.author:
+        messages.error(request, '수정권한이 없습니다.')
+
+        return redirect('task:detail', task_id=task_id)
+
+    if request.method == 'POST':
+        form = TaskForm(request.POST, instance=task)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('task:detail', task_id=task_id)
+    else:
+        form = TaskForm(instance=task)
+
+    context = {'form': form}
+
+    return render(
+        request,
+        'task/task_form.html',
+        context
+    )
+
+
+@login_required(login_url='common:login')
+def delete(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+
+    if request.user != task.author:
+        messages.error(request, '삭제권한이 없습니다.')
+
+        return redirect('task:detail', task_id=task_id)
+
+    task.delete()
+
+    return redirect(
+        'task:task'
     )

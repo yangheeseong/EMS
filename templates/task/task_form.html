@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load task_filter %}
+{% block content %}
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        {% include "form_errors.html" %}
+        <div class="form-group">
+            <label for="taskName" class="form-label">업무명</label>
+            <input type="text" class="form-control" name="taskName" id="taskName" value="{{ form.taskName.value|default_if_none:'' }}">
+        </div>
+        <div class="form-group">
+            <label for="referenceUrl" class="form-label">참조 URL</label>
+            <input type="text" class="form-control" name="referenceUrl" id="referenceUrl" value="{{ form.referenceUrl.value|default_if_none:'' }}">
+        </div>
+        <div class="form-group">
+            <label for="prioritize" class="form-label">우선순위</label>
+            <select class="form-control" name="prioritize" id="prioritize">
+                <option value="2">보통</option>
+                <option value="1">높음</option>
+                <option value="3">낮음</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">사이트 구분</label>
+            <div class="card" style="padding: 6px 0px 6px 15px;">
+                <div class="checkbox">
+                    <input type="checkbox" name="siteType" value="팝콘티비">팝콘티비&nbsp;
+                    <input type="checkbox" name="siteType" value="ASP">ASP&nbsp;
+                    <input type="checkbox" name="siteType" value="셀럽티비">셀럽티비&nbsp;
+                    <input type="checkbox" name="siteType" value="마피아티비">마피아티비&nbsp;
+                    <input type="checkbox" name="siteType" value="달란트티비">달란트티비&nbsp;
+                    <input type="checkbox" name="siteType" value="API">API&nbsp;
+                    <input type="checkbox" name="siteType" value="관리자">관리자&nbsp;
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">기기 구분</label>
+            <div class="card" style="padding: 6px 0px 6px 15px;">
+                <div class="checkbox">
+                    <input type="checkbox" name="deviceType" value="PC">PC&nbsp;
+                    <input type="checkbox" name="deviceType" value="Mobile">Mobile&nbsp;
+                    <input type="checkbox" name="deviceType" value="Player">Player&nbsp;
+                    <input type="checkbox" name="deviceType" value="Caster">Caster&nbsp;
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="request" class="form-label">요청자</label>
+            <input type="text" class="form-control" name="request" id="request" value="{{ form.request.value|default_if_none:'' }}">
+        </div>
+        <div class="form-group">
+            <label class="form-label">담당자</label>
+            <div class="card" style="padding: 6px 0px 6px 15px;">
+                <div class="checkbox">
+                    <input type="checkbox" name="manager" value="양희성">양희성&nbsp;
+                    <input type="checkbox" name="manager" value="엄명진">엄명진&nbsp;
+                    <input type="checkbox" name="manager" value="이호영">이호영&nbsp;
+                    <input type="checkbox" name="manager" value="임성준">임성준&nbsp;
+                    <input type="checkbox" name="manager" value="최진실">최진실&nbsp;
+                    <input type="checkbox" name="manager" value="이승연">이승연&nbsp;
+                    <input type="checkbox" name="manager" value="이지원">이지원&nbsp;
+                    <input type="checkbox" name="manager" value="황대형">황대형&nbsp;
+                    <input type="checkbox" name="manager" value="엄규선">엄규선&nbsp;
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="completeState" class="form-label">상태</label>
+            <input type="text" class="form-control" name="completeState" id="completeState" value="{{ form.completeState.value|default_if_none:'' }}">
+        </div>
+        <div class="form-group">
+            <label for="taskContent" class="form-label">내용</label>
+            <textarea class="form-control" name="taskContent" id="taskContent" rows="10">{{ form.taskContent.value|default_if_none:'' }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">저장하기</button>
+    </form>
+</div>
+{% endblock%}
+{% block script %}
+<script type="text/javascript">
+    new SimpleMDE({
+        autofocus: true,
+        element: document.getElementById("taskContent"),
+        spellChecker: false,
+        autosave: {
+            enabled: false,
+            unique_id: "taskContent",
+        },
+    });
+</script>
+{% endblock %}

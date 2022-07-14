@@ -27,6 +27,15 @@
                 <section class="mb-5">
                     {{ task.taskContent }}
                 </section>
+                <div class="card bg-light" style="border:0px;">
+                    <div class="card-body-bottom">
+                        <a href="javascript:void(0)" id="btnList" class="btn btn-sm btn-info float-right">목록</a>
+                        {% if request.user == task.author %}
+                        <a href="javascript:void(0)" id="btnDelete" class="btn btn-sm btn-danger" data-uri="{% url 'task:delete' task.id %}">삭제</a>
+                        <a href="{% url 'task:modify' task.id %}" id="btnModify" class="btn btn-sm btn-success">수정</a>
+                        {% endif %}
+                    </div>
+                </div>
             </article>
             <!-- Comments section-->
             <section class="mb-5">
@@ -72,6 +81,16 @@
             enabled: false,
             unique_id: "comment",
         },
+    });
+
+    $('#btnList').bind('click', function() {
+        window.history.back();
+    });
+
+    $('#btnDelete').bind('click', function() {
+        if (confirm('삭제 하시겠습니까?')) {
+            location.href = this.dataset.uri;
+        }
     });
 </script>
 {% endblock %}
