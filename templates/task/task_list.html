@@ -27,14 +27,14 @@
                 </div>
                 <table class="table table-bordered">
                     <colgroup>
-                        <col style="width: 7%;">
-                        <col style="width: 7%;">
-                        <col style="width: 10%;">
+                        <col style="width: 5%;">
+                        <col style="width: 6%;">
+                        <col style="width: 13%;">
                         <col style="width: 36%;">
                         <col style="width: 10%;">
+                        <col style="width: 13%;">
                         <col style="width: 10%;">
-                        <col style="width: 10%;">
-                        <col style="width: 10%;">
+                        <col style="width: 7%;">
                     </colgroup>
                     <thead>
                     <tr>
@@ -54,7 +54,11 @@
                     <tr>
                         <td>{{ task.id }}</td>
                         <td>{{ task.prioritize }}</td>
-                        <td>{{ task.siteType }}</td>
+                        <td>
+                            {% for siteType in task.siteType.iterator %}
+                                {{ siteType }}
+                            {% endfor %}
+                        </td>
                         <td>
                             <a href="{% url 'task:detail' task.id %}">{{ task.taskName }}</a>
                             {% if task.taskcomment_set.count > 0 %}
@@ -62,7 +66,11 @@
                             {% endif %}
                         </td>
                         <td>{{ task.request }}</td>
-                        <td>{{ task.manager }}</td>
+                        <td>
+                            {% for manager in task.manager.iterator %}
+                                {{ manager }}
+                            {% endfor %}
+                        </td>
                         <td>{{ task.createDate|date:'Y-m-d' }}</td>
                         <td>{{ task.completeState|completeStateText }}</td>
                     </tr>

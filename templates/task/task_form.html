@@ -25,13 +25,17 @@
             <label class="form-label">사이트 구분</label>
             <div class="card" style="padding: 6px 0px 6px 15px;">
                 <div class="checkbox">
-                    <input type="checkbox" name="siteType" value="팝콘티비">팝콘티비&nbsp;
-                    <input type="checkbox" name="siteType" value="ASP">ASP&nbsp;
-                    <input type="checkbox" name="siteType" value="셀럽티비">셀럽티비&nbsp;
-                    <input type="checkbox" name="siteType" value="마피아티비">마피아티비&nbsp;
-                    <input type="checkbox" name="siteType" value="달란트티비">달란트티비&nbsp;
-                    <input type="checkbox" name="siteType" value="API">API&nbsp;
-                    <input type="checkbox" name="siteType" value="관리자">관리자&nbsp;
+                    {% if siteTypeList %}
+                        {% for siteType in siteTypeList %}
+                            <input type="checkbox" name="siteType" value="{{ siteType }}"
+                            {% for taskSiteType in task.siteType.iterator %}
+                                {% if siteType == taskSiteType %}
+                                    checked
+                                {% endif %}
+                            {% endfor %}
+                            >{{ siteType }}&nbsp;
+                        {% endfor%}
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -39,10 +43,17 @@
             <label class="form-label">기기 구분</label>
             <div class="card" style="padding: 6px 0px 6px 15px;">
                 <div class="checkbox">
-                    <input type="checkbox" name="deviceType" value="PC">PC&nbsp;
-                    <input type="checkbox" name="deviceType" value="Mobile">Mobile&nbsp;
-                    <input type="checkbox" name="deviceType" value="Player">Player&nbsp;
-                    <input type="checkbox" name="deviceType" value="Caster">Caster&nbsp;
+                    {% if deviceList %}
+                        {% for deviceType in deviceList %}
+                            <input type="checkbox" name="deviceType" value="{{ deviceType }}"
+                            {% for taskDeviceType in task.deviceType.iterator %}
+                                {% if deviceType == taskDeviceType %}
+                                    checked
+                                {% endif %}
+                            {% endfor %}
+                            >{{ deviceType }}&nbsp;
+                        {% endfor%}
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -54,15 +65,17 @@
             <label class="form-label">담당자</label>
             <div class="card" style="padding: 6px 0px 6px 15px;">
                 <div class="checkbox">
-                    <input type="checkbox" name="manager" value="양희성">양희성&nbsp;
-                    <input type="checkbox" name="manager" value="엄명진">엄명진&nbsp;
-                    <input type="checkbox" name="manager" value="이호영">이호영&nbsp;
-                    <input type="checkbox" name="manager" value="임성준">임성준&nbsp;
-                    <input type="checkbox" name="manager" value="최진실">최진실&nbsp;
-                    <input type="checkbox" name="manager" value="이승연">이승연&nbsp;
-                    <input type="checkbox" name="manager" value="이지원">이지원&nbsp;
-                    <input type="checkbox" name="manager" value="황대형">황대형&nbsp;
-                    <input type="checkbox" name="manager" value="엄규선">엄규선&nbsp;
+                    {% if manageList %}
+                        {% for manager in manageList %}
+                            <input type="checkbox" name="manager" value="{{ manager }}"
+                            {% for taskManager in task.manager.iterator %}
+                                {% if manager == taskManager %}
+                                    checked
+                                {% endif %}
+                            {% endfor %}
+                            >{{ manager }}&nbsp;
+                        {% endfor%}
+                    {% endif %}
                 </div>
             </div>
         </div>

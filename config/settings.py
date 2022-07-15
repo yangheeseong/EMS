@@ -266,5 +266,9 @@ LOGGING = {
             'handlers': ['console', 'file'],
             'level': 'INFO',
         },
+        'task': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
     }
 }

@@ -113,3 +113,7 @@ python manage.py createsuperuser
 ***
 ### <업무 관리 기능 추가 - 22.07.14>
 - 수정, 삭제 기능 추가
+***
+### <업무 관리 기능 추가 - 22.07.15>
+- 사이트구분, 디바이스타입, 담당자 Model 생성
+- Task와 ManyToManyField로 정의

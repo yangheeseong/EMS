@@ -1,4 +1,5 @@
 import logging
+import json
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -7,7 +8,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 
 from ..forms import TaskForm
-from ..models import Task
+from ..models import Task, SiteType, DeviceType, Manager
 
 logger = logging.getLogger('task')
 
@@ -78,6 +79,9 @@ def create(request):
 @login_required(login_url='common:login')
 def modify(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
+    siteTypeList = SiteType.objects.all
+    deviceList = DeviceType.objects.all
+    manageList = Manager.objects.all
 
     if request.user != task.author:
         messages.error(request, '수정권한이 없습니다.')
@@ -88,13 +92,17 @@ def modify(request, task_id):
         form = TaskForm(request.POST, instance=task)
 
         if form.is_valid():
+            # task = form.save(commit=False)
+            # task.siteType = json.dumps(request.POST.getlist('siteType'), ensure_ascii=False)
+            # task.deviceType = json.dumps(request.POST.getlist('deviceType'), ensure_ascii=False)
+            # task.manager = json.dumps(request.POST.getlist('manager'), ensure_ascii=False)
             form.save()
 
             return redirect('task:detail', task_id=task_id)
     else:
         form = TaskForm(instance=task)
 
-    context = {'form': form}
+    context = {'form': form, 'task': task, 'siteTypeList': siteTypeList, 'deviceList': deviceList, 'manageList': manageList}
 
     return render(
         request,
