@@ -24,6 +24,19 @@
                 <header class="mb-4">
                     <h1 class="fw-bolder mb-1">{{ task.taskName }}</h1>
                 </header>
+                <div class="card bg-light" style="border:0px;">
+                    <div class="card-body-bottom">
+                        {% for siteType in task.siteType.iterator %}
+                        <span class="label label-info">{{ siteType }}</span>
+                        {% endfor %}
+                        {% for deviceType in task.deviceType.iterator %}
+                        <span class="label label-warning">{{ deviceType }}</span>
+                        {% endfor %}
+                        {% for manager in task.manager.iterator %}
+                        <span class="label label-success">{{ manager }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
                 <section class="mb-5">
                     {{ task.taskContent }}
                 </section>

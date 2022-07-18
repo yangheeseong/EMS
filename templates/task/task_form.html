@@ -20,6 +20,7 @@
                 <option value="1">높음</option>
                 <option value="3">낮음</option>
             </select>
+            <input type="hidden" name="hidPrioritize" id="hidPrioritize" value="{{ form.prioritize.value }}">
         </div>
         <div class="form-group">
             <label class="form-label">사이트 구분</label>
@@ -27,7 +28,7 @@
                 <div class="checkbox">
                     {% if siteTypeList %}
                         {% for siteType in siteTypeList %}
-                            <input type="checkbox" name="siteType" value="{{ siteType }}"
+                            <input type="checkbox" name="siteType" id="id_siteType" value="{{ siteType.id }}"
                             {% for taskSiteType in task.siteType.iterator %}
                                 {% if siteType == taskSiteType %}
                                     checked
@@ -45,7 +46,7 @@
                 <div class="checkbox">
                     {% if deviceList %}
                         {% for deviceType in deviceList %}
-                            <input type="checkbox" name="deviceType" value="{{ deviceType }}"
+                            <input type="checkbox" name="deviceType" id="id_deviceType" value="{{ deviceType.id }}"
                             {% for taskDeviceType in task.deviceType.iterator %}
                                 {% if deviceType == taskDeviceType %}
                                     checked
@@ -67,7 +68,7 @@
                 <div class="checkbox">
                     {% if manageList %}
                         {% for manager in manageList %}
-                            <input type="checkbox" name="manager" value="{{ manager }}"
+                            <input type="checkbox" name="manager" id="id_manager" value="{{ manager.id }}"
                             {% for taskManager in task.manager.iterator %}
                                 {% if manager == taskManager %}
                                     checked
@@ -81,13 +82,19 @@
         </div>
         <div class="form-group">
             <label for="completeState" class="form-label">상태</label>
-            <input type="text" class="form-control" name="completeState" id="completeState" value="{{ form.completeState.value|default_if_none:'' }}">
+            <select class="form-control" name="completeState" id="completeState">
+                <option value="N">준비</option>
+                <option value="P">진행</option>
+                <option value="Y">완료</option>
+                <option value="E">보류</option>
+            </select>
+            <input type="hidden" name="hidCompleteState" id="hidCompleteState" value="{{ form.completeState.value }}">
         </div>
         <div class="form-group">
             <label for="taskContent" class="form-label">내용</label>
             <textarea class="form-control" name="taskContent" id="taskContent" rows="10">{{ form.taskContent.value|default_if_none:'' }}</textarea>
         </div>
-        <button type="submit" class="btn btn-primary">저장하기</button>
+        <button type="submit" class="btn btn-primary" id="btnSubmit">저장하기</button>
     </form>
 </div>
 {% endblock%}
@@ -101,6 +108,22 @@
             enabled: false,
             unique_id: "taskContent",
         },
+    });
+
+    $(document).ready(function() {
+        let prioritize = $('#hidPrioritize').val();
+        let completeState = $('#hidCompleteState').val();
+
+        if (prioritize === 'None') {
+            prioritize = 2;
+        }
+
+        if (completeState === 'None') {
+            completeState = 'N';
+        }
+
+        $('#prioritize').val(prioritize);
+        $('#completeState').val(completeState);
     });
 </script>
 {% endblock %}

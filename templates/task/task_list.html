@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">업무 목록</h6>
+            <h6 class="m-0 font-weight-bold text-primary">업무 관리</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -82,6 +82,11 @@
                     {% endif %}
                     </tbody>
                 </table>
+                <div class="col-sm-12" style="margin-bottom:10px;">
+                    <div class="col-12" style="margin-bottom:10px;text-align:right;">
+                        <a href="{% url 'task:create' %}" class="btn btn-primary">업무 등록</a>
+                    </div>
+                </div>
                 <!-- 페이징처리 시작 -->
                 <ul class="pagination justify-content-center">
                     <!-- 이전페이지 -->

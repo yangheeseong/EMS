@@ -1,11 +1,10 @@
 import logging
-import json
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
 
 from ..forms import TaskForm
 from ..models import Task, SiteType, DeviceType, Manager
@@ -18,6 +17,9 @@ def task(request):
     kw = request.GET.get('kw', '')
     pageLength = request.GET.get('pageLength', '10')
     task_list = Task.objects.order_by('-createDate')
+
+    if int(page) < 1:
+        page = '1'
 
     if kw:
         task_list = task_list.filter(
@@ -55,6 +57,10 @@ def detail(request, task_id):
 
 @login_required(login_url='common:login')
 def create(request):
+    siteTypeList = SiteType.objects.all
+    deviceList = DeviceType.objects.all
+    manageList = Manager.objects.all
+
     if request.method == 'POST':
         form = TaskForm(request.POST)
 
@@ -63,11 +69,21 @@ def create(request):
             task.author = request.user
             task.save()
 
+            # ManyToManyField insert는 .add를 사용
+            for siteType in request.POST.getlist('siteType'):
+                task.siteType.add(siteType)
+
+            for deviceType in request.POST.getlist('deviceType'):
+                task.deviceType.add(deviceType)
+
+            for manager in request.POST.getlist('manager'):
+                task.manager.add(manager)
+
             return redirect('task:task')
     else:
         form = TaskForm()
 
-    context = {'form': form}
+    context = {'form': form, 'siteTypeList': siteTypeList, 'deviceList': deviceList, 'manageList': manageList}
 
     return render(
         request,
@@ -92,10 +108,17 @@ def modify(request, task_id):
         form = TaskForm(request.POST, instance=task)
 
         if form.is_valid():
-            # task = form.save(commit=False)
+            task = form.save(commit=False)
+            # python -> json type 변경
             # task.siteType = json.dumps(request.POST.getlist('siteType'), ensure_ascii=False)
             # task.deviceType = json.dumps(request.POST.getlist('deviceType'), ensure_ascii=False)
             # task.manager = json.dumps(request.POST.getlist('manager'), ensure_ascii=False)
+
+            # ManyToManyField update는 .set을 사용
+            task.siteType.set(request.POST.getlist('siteType'))
+            task.deviceType.set(request.POST.getlist('deviceType'))
+            task.manager.set(request.POST.getlist('manager'))
+
             form.save()
 
             return redirect('task:detail', task_id=task_id)

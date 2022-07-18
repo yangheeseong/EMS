@@ -60,7 +60,7 @@
 
     <!-- Nav Item - 메모장 -->
     <li class="nav-item {% if 'memo' in request.path %}active{% endif %}">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{% url 'memo:memo' %}">
             <i class="fas fa-fw fa-table"></i>
             <span>메모장</span>
         </a>

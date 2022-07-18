@@ -85,6 +85,7 @@ else:
 # Application definition
 
 INSTALLED_APPS = [
+    'memo.apps.MemoConfig',
     'task.apps.TaskConfig',
     'schedule.apps.ScheduleConfig',
     'common.apps.CommonConfig',
@@ -181,6 +182,10 @@ USE_TZ = False
 
 STATIC_URL = 'static/'
 
+# UPload files
+MEDIA_URL = 'upload/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
+
 # if os.environ.get('STATIC_ROOT'):
 #     STATIC_ROOT = os.environ.get('STATIC_ROOT')
 # else:
@@ -267,6 +272,10 @@ LOGGING = {
             'level': 'INFO',
         },
         'task': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'memo': {
             'handlers': ['console'],
             'level': 'INFO',
         },

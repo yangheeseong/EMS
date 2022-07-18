@@ -103,7 +103,7 @@ python manage.py createsuperuser
 - 상세페이지 상태값 업데이트 기능 추가
 ***
 ### <업무 관리 기능 추가 - 22.07.12>
-- app 생성
+- task app 생성
 - config/settings INSTALLED_APPS 추가
 - config/urls urlpatterns 추가
 - models, urls, views 추가
@@ -116,4 +116,8 @@ python manage.py createsuperuser
 ***
 ### <업무 관리 기능 추가 - 22.07.15>
 - 사이트구분, 디바이스타입, 담당자 Model 생성
-- Task와 ManyToManyField로 정의
+### <업무 관리 기능 추가 - 22.07.18>
+- 상세페이지 내용 추가(사이트 구분 등...)
+- memo app 생성
+- config/settings INSTALLED_APPS 추가
+- config/urls urlpatterns 추가

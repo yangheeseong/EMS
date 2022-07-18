@@ -27,7 +27,9 @@ urlpatterns = [
     path('common/', include('common.urls')),
     path('schedule/', include('schedule.urls')),
     path('task/', include('task.urls')),
+    path('memo/', include('memo.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 handler404 = 'common.views.page_not_found'
