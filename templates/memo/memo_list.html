@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
+{% load memo_filter %}
 {% block content %}
 <div class="container-fluid">
+    {% if messages %}
+    <div class="alert alert-danger my-3" role="alert">
+        {% for message in messages %}
+        <strong>{{ message.tags }}</strong>
+        <ul><li>{{ message.message }}</li></ul>
+        {% endfor %}
+    </div>
+    {% endif %}
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">메모장</h6>
@@ -30,15 +39,24 @@
                 <div class="col-lg-4">
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            {{ memo.memoName }}
+                            {{ memo.memoName }}&nbsp;
+                            {% if request.user == memo.author %}
+                            <a href="{% url 'memo:modify' memo.id %}" class="btn btn-xs btn-outline-success">수정</a>
+                            <a href="javascript:void(0)" class="btn btn-xs btn-outline-danger btnDelete" data-uri="{% url 'memo:delete' memo.id %}">삭제</a>
+                            {% endif %}
                         </div>
                         <div class="panel-body">
-                            {{ memo.memo }}
+                            {{ memo.memo|mark }}
                         </div>
                     </div>
                 </div>
                 {% endfor %}
                 {% endif %}
+            </div>
+            <div class="col-sm-12">
+                <div class="col-12" style="margin-bottom:10px;text-align:right;">
+                    <a href="{% url 'memo:create' %}" class="btn btn-primary">메모 등록</a>
+                </div>
             </div>
             <!-- 페이징처리 시작 -->
             <ul class="pagination justify-content-center">
@@ -108,12 +126,26 @@
         document.getElementById('searchForm').submit();
     });
 
+    $('#search_kw').bind('keyup', function(key) {
+        if (key.keyCode === 13) {
+            document.getElementById('kw').value = document.getElementById('search_kw').value;
+            document.getElementById('page').value = 1;
+            document.getElementById('searchForm').submit();
+        }
+    });
+
     const sel_length = document.getElementById("dataTable_length");
 
     sel_length.addEventListener('change', function() {
         document.getElementById('pageLength').value = this.value;
         document.getElementById('page').value = 1;
         document.getElementById('searchForm').submit();
+    });
+
+    $('.btnDelete').bind('click', function() {
+        if(confirm('삭제하시겠습니까?')) {
+            location.href = this.dataset.uri;
+        }
     });
 
     $(document).ready(function() {

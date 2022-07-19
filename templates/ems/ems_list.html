@@ -128,6 +128,14 @@
         document.getElementById('searchForm').submit();
     });
 
+    $('#search_kw').bind('keyup', function(key) {
+        if (key.keyCode === 13) {
+            document.getElementById('kw').value = document.getElementById('search_kw').value;
+            document.getElementById('page').value = 1;
+            document.getElementById('searchForm').submit();
+        }
+    });
+
     const sel_length = document.getElementById("dataTable_length");
 
     sel_length.addEventListener('change', function() {

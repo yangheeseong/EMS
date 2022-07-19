@@ -16,6 +16,9 @@ def index(request):
     pageLength = request.GET.get('pageLength', '10')
     log_list = SiteErrorLog.objects.order_by('-createDate')
 
+    if int(page) < 1:
+        page = '1'
+
     if kw:
         log_list = log_list.filter(
             Q(errorCategory__icontains=kw)

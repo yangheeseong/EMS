@@ -1,7 +1,6 @@
 from django import forms
 from task.models import Task, TaskComment
 
-
 class CommentForm(forms.ModelForm):
     class Meta:
         model = TaskComment
