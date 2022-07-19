@@ -116,6 +116,8 @@ sentry.json
 .env.dev
 .env.prod
 .env.prod.db
+docker-compose.dev.yml
+docker-compose.yml
 
 # Spyder project settings
 .spyderproject
