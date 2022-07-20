@@ -17,24 +17,111 @@
     </div>
     {% endif %}
     <div class="row">
-        <div class="col-lg-8">
-            <!-- Post content-->
+        <div class="col-lg-12">
+            <header class="mb-4">
+                <h1 class="fw-bolder mb-1">{{ task.taskName }}</h1>
+            </header>
+            <div class="card bg-light" style="border:0px;">
+                <div class="card-body-bottom">
+                    <span class="label label-green">우선순위: {{ task.prioritize|prioritizeText }}</span>
+                    <span class="label label-primary">진행상태: {{ task.taskState|taskStateText }}</span>
+                    {% for siteType in task.siteType.iterator %}
+                    <span class="label label-info">{{ siteType }}</span>
+                    {% endfor %}
+                    {% for deviceType in task.deviceType.iterator %}
+                    <span class="label label-warning">{{ deviceType }}</span>
+                    {% endfor %}
+                    {% for manager in task.manager.iterator %}
+                    <span class="label label-success">{{ manager }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">요청자</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ task.request }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">진행률</div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ task.taskProgress }}%</div>
+                                    <input type="hidden" name="hidTaskProgress" id="hidTaskProgress" value="{{ task.taskProgress }}">
+                                </div>
+                                <div class="col">
+                                    <div class="progress progress-sm mr-2">
+                                        <div class="progress-bar bg-info" role="progressbar" id="taskProgressbar"
+                                             style="width:0%" aria-valuenow="{{ task.taskProgretss }}" aria-valuemin="0"
+                                             aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">시작일</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ task.taskStartDate|date:'Y-m-d' }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">종료일</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ task.taskEndDate|date:'Y-m-d' }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
             <article>
-                <!-- Post header-->
-                <header class="mb-4">
-                    <h1 class="fw-bolder mb-1">{{ task.taskName }}</h1>
-                </header>
                 <div class="card bg-light" style="border:0px;">
                     <div class="card-body-bottom">
-                        {% for siteType in task.siteType.iterator %}
-                        <span class="label label-info">{{ siteType }}</span>
-                        {% endfor %}
-                        {% for deviceType in task.deviceType.iterator %}
-                        <span class="label label-warning">{{ deviceType }}</span>
-                        {% endfor %}
-                        {% for manager in task.manager.iterator %}
-                        <span class="label label-success">{{ manager }}</span>
-                        {% endfor %}
+                        {% if task.referenceUrl != '' %}
+                            {% if 'https://' in task.referenceUrl %}
+                                <a href="{{ task.referenceUrl }}" target="_blank">{{ task.referenceUrl }}</a>
+                            {% else %}
+                                {{ task.referenceUrl }}
+                            {% endif %}
+                        {% endif %}
                     </div>
                 </div>
                 <section class="mb-5">
@@ -104,6 +191,12 @@
         if (confirm('삭제 하시겠습니까?')) {
             location.href = this.dataset.uri;
         }
+    });
+
+    $(document).ready(function () {
+         let taskProgress = $('#hidTaskProgress').val();
+
+         $('#taskProgressbar').css('width', taskProgress);
     });
 </script>
 {% endblock %}

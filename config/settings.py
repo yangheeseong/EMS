@@ -134,14 +134,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': os.environ.get("SQL_ENGINE", 'django.db.backends.sqlite3'),
-        'NAME': os.environ.get('SQL_DATABASE', os.path.join(BASE_DIR, 'db.sqlite3')),
-        'USER': os.environ.get('SQL_USER', 'user'),
-        'PASSWORD': os.environ.get('SQL_PASSWORD', 'password'),
-        'HOST': os.environ.get('SQL_HOST', 'localhost'),
-        'PORT': os.environ.get("SQL_PORT", '5432'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': os.environ.get("SQL_ENGINE", 'django.db.backends.sqlite3'),
+        # 'NAME': os.environ.get('SQL_DATABASE', os.path.join(BASE_DIR, 'db.sqlite3')),
+        # 'USER': os.environ.get('SQL_USER', 'user'),
+        # 'PASSWORD': os.environ.get('SQL_PASSWORD', 'password'),
+        # 'HOST': os.environ.get('SQL_HOST', 'localhost'),
+        # 'PORT': os.environ.get("SQL_PORT", '5432'),
     }
 }
 
@@ -188,10 +188,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
 
 # 로컬 개발시 주석 처리
 # 서버 배포시 주석 해제
-if os.environ.get('STATIC_ROOT'):
-    STATIC_ROOT = os.environ.get('STATIC_ROOT')
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# if os.environ.get('STATIC_ROOT'):
+#     STATIC_ROOT = os.environ.get('STATIC_ROOT')
+# else:
+#     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 if os.environ.get('STATICFILES_DIRS'):
     STATICFILES_DIRS = []

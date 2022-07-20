@@ -14,7 +14,7 @@ def mark(value):
 
 
 @register.filter
-def completeStateText(value):
+def taskStateText(value):
     if value == 'N':
         returnText = '준비'
     elif value == 'R':
@@ -31,5 +31,17 @@ def completeStateText(value):
         returnText = '완료'
     elif value == 'E':
         returnText = '보류'
+
+    return returnText
+
+
+@register.filter
+def prioritizeText(value):
+    if value == '1':
+        returnText = '낮음'
+    elif value == '2':
+        returnText = '보통'
+    elif value == '3':
+        returnText = '높음'
 
     return returnText

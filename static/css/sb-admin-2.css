@@ -11366,6 +11366,36 @@ a.badge:focus {
   background-color: #2d6987;
 }
 
+.label-primary,
+.badge-primary {
+  background-color: #36b9cc;
+}
+
+.label-primary[href],
+.badge-primary[href] {
+  background-color: #4e73df;
+}
+
+.label-gray,
+.badge-gray {
+  background-color: #858796;
+}
+
+.label-gray[href],
+.badge-gray[href] {
+  background-color: #5a5c69;
+}
+
+.label-green,
+.badge-green {
+  background-color: #1CC88A;
+}
+
+.label-greene[href],
+.badge-green[href] {
+  background-color: #20c9a6;
+}
+
 .label-inverse,
 .badge-inverse {
   background-color: #333333;

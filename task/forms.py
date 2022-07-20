@@ -12,12 +12,30 @@ class CommentForm(forms.ModelForm):
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['prioritize', 'request', 'taskName', 'referenceUrl', 'taskContent', 'completeState']
+        fields = ['taskName',
+                  'referenceUrl',
+                  'siteType',
+                  'deviceType',
+                  'manager',
+                  'request',
+                  'prioritize',
+                  'taskState',
+                  'taskProgress',
+                  'taskStartDate',
+                  'taskEndDate',
+                  'taskContent'
+        ]
         labels = {
-            'prioritize': '우선순위',
-            'request': '요청자',
             'taskName': '업무명',
-            'referenceUrl': '참조URL',
+            'referenceUrl': '참조 URL',
+            'siteType': '사이트 구분',
+            'deviceType': '기기 구분',
+            'manager': '담당자',
+            'request': '요청자',
+            'prioritize': '우선순위',
+            'taskState': '상태',
+            'taskProgress': '진행률',
+            'taskStartDate': '시작일',
+            'taskEndDate': '종료일',
             'taskContent': '내용',
-            'completeState': '상태',
         }

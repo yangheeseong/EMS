@@ -28,7 +28,7 @@ def task(request):
 
     if state:
         task_list = task_list.filter(
-            Q(completeState__icontains=state)
+            Q(taskState__icontains=state)
         ).distinct()
 
     paginator = Paginator(task_list, pageLength)

@@ -14,15 +14,6 @@
             <input type="text" class="form-control" name="referenceUrl" id="referenceUrl" value="{{ form.referenceUrl.value|default_if_none:'' }}">
         </div>
         <div class="form-group">
-            <label for="prioritize" class="form-label">우선순위</label>
-            <select class="form-control" name="prioritize" id="prioritize">
-                <option value="2">보통</option>
-                <option value="1">높음</option>
-                <option value="3">낮음</option>
-            </select>
-            <input type="hidden" name="hidPrioritize" id="hidPrioritize" value="{{ form.prioritize.value }}">
-        </div>
-        <div class="form-group">
             <label class="form-label">사이트 구분</label>
             <div class="card" style="padding: 6px 0px 6px 15px;">
                 <div class="checkbox">
@@ -59,10 +50,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="request" class="form-label">요청자</label>
-            <input type="text" class="form-control" name="request" id="request" value="{{ form.request.value|default_if_none:'' }}">
-        </div>
-        <div class="form-group">
             <label class="form-label">담당자</label>
             <div class="card" style="padding: 6px 0px 6px 15px;">
                 <div class="checkbox">
@@ -80,15 +67,56 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <label for="completeState" class="form-label">상태</label>
-            <select class="form-control" name="completeState" id="completeState">
-                <option value="N">준비</option>
-                <option value="P">진행</option>
-                <option value="Y">완료</option>
-                <option value="E">보류</option>
-            </select>
-            <input type="hidden" name="hidCompleteState" id="hidCompleteState" value="{{ form.completeState.value }}">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label for="request" class="form-label">요청자</label>
+                    <input type="text" class="form-control" name="request" id="request" value="{{ form.request.value|default_if_none:'' }}">
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label for="prioritize" class="form-label">우선순위</label>
+                    <select class="form-control" name="prioritize" id="prioritize">
+                        <option value="2">보통</option>
+                        <option value="1">높음</option>
+                        <option value="3">낮음</option>
+                    </select>
+                    <input type="hidden" name="hidPrioritize" id="hidPrioritize" value="{{ form.prioritize.value }}">
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label for="taskState" class="form-label">상태</label>
+                    <select class="form-control" name="taskState" id="taskState">
+                        <option value="N">준비</option>
+                        <option value="P">진행</option>
+                        <option value="Y">완료</option>
+                        <option value="E">보류</option>
+                    </select>
+                    <input type="hidden" name="hidTaskState" id="hidTaskState" value="{{ form.taskState.value }}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label for="taskStartDate" class="form-label">시작일</label>
+                    <input type="text" class="form-control datepicker" name="taskStartDate" id="taskStartDate" value="{{ form.taskStartDate.value|default_if_none:''|date:'Y-m-d' }}">
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label for="taskEndDate" class="form-label">종료일</label>
+                    <input type="text" class="form-control datepicker" name="taskEndDate" id="taskEndDate" value="{{ form.taskEndDate.value|default_if_none:''|date:'Y-m-d' }}">
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label for="taskProgress" class="form-label">진행률</label>
+                    <input type="number" class="form-control" name="taskProgress" id="taskProgress" value="{{ form.taskProgress.value }}">
+                </div>
+            </div>
         </div>
         <div class="form-group">
             <label for="taskContent" class="form-label">내용</label>
@@ -103,7 +131,7 @@
 {% block script %}
 <script type="text/javascript">
     new SimpleMDE({
-        autofocus: true,
+        autofocus: false,
         element: document.getElementById("taskContent"),
         spellChecker: false,
         autosave: {
@@ -112,20 +140,24 @@
         },
     });
 
+    $(function() {
+        $('.datepicker').datepicker();
+    });
+
     $(document).ready(function() {
         let prioritize = $('#hidPrioritize').val();
-        let completeState = $('#hidCompleteState').val();
+        let taskState = $('#hidTaskState').val();
 
         if (prioritize === 'None') {
             prioritize = 2;
         }
 
-        if (completeState === 'None') {
-            completeState = 'N';
+        if (taskState === 'None') {
+            taskState = 'N';
         }
 
         $('#prioritize').val(prioritize);
-        $('#completeState').val(completeState);
+        $('#taskState').val(taskState);
     });
 </script>
 {% endblock %}
